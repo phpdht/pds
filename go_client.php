@@ -9,11 +9,11 @@ error_reporting(E_ALL |E_NOTICE );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
 //swoole_process::setaffinity(array(0));
-define('MAX_REQUEST', 1000);// 允许最大连接数, 不可大于系统ulimit -n的值
+define('MAX_REQUEST', 3000);// 允许最大连接数, 不可大于系统ulimit -n的值
 define('AUTO_FIND_TIME', 30000);//定时寻找节点时间间隔 /毫秒
 define('AUTO_FIND_AFTER', 1000);//定时寻找节点时间间隔 /毫秒
 
-define('MAX_NODE_SIZE', 1200);//保存node_id最大数量
+define('MAX_NODE_SIZE', 2000);//保存node_id最大数量
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
 define('ROOT_PATH', dirname(__FILE__));
 define('BASEPATH', ROOT_PATH.'/dht_client_task/');
@@ -63,20 +63,22 @@ $serv->set(array(
 	'task_max_request'=>0
 ));
 
-$serv->on('WorkerStart', function(\Swoole\Server $serv, $worker_id){
+$serv->on('WorkerStart', function( $serv, $worker_id){
    global $table,$bootstrap_nodes;
 
+    if(!$serv->taskworker){
+        swoole_timer_tick(AUTO_FIND_TIME, function ($timer_id) {
+            global $table,$bootstrap_nodes;
+            echo "timer_id $timer_id \n";
+            if(count($table) == 0){
+                DhtServer::join_dht($table,$bootstrap_nodes);
+            }else{
+                DhtServer::auto_find_node($table);
+            }
+        });
+    }
 
 
-    swoole_timer_tick(AUTO_FIND_TIME, function ($timer_id) {
-        global $table,$bootstrap_nodes;
-        echo "timer_id $timer_id \n";
-        if(count($table) == 0){
-           DhtServer::join_dht($table,$bootstrap_nodes);
-        }else{
-		   DhtServer::auto_find_node($table);
-		}
-    });
 });
 
 /*
