@@ -1,7 +1,7 @@
 #
 
 
-FROM php:7.0-cli
+FROM php:7.1-cli
 
 MAINTAINER Dongasai 1514582970@qq.com
 
