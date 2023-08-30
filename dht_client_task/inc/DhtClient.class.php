@@ -22,7 +22,7 @@ class DhtClient
         if (!isset($msg['r']['nodes']) || !isset($msg['r']['nodes'][1])) return;
         // 对nodes数据进行解码
 
-        echo '朋友'.$address[0].'在线'.PHP_EOL;
+//        echo '朋友'.$address[0].'在线'.PHP_EOL;
         $nodes = Base::decode_nodes($msg['r']['nodes']);
         // 对nodes循环处理
         foreach ($nodes as $node) {
@@ -42,7 +42,8 @@ class DhtClient
     {
         switch ($msg['q']) {
             case 'ping'://确认你是否在线
-                echo '朋友'.$address[0].'正在确认你是否在线'.PHP_EOL;
+//                echo '朋友'.$address[0].'正在确认你是否在线'.PHP_EOL;
+//                Func::Log('朋友'.$address[0].'正在确认你是否在线');
                 self::on_ping($msg, $address);
                 break;
             case 'find_node': //向服务器发出寻找节点的请求

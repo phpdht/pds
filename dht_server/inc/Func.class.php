@@ -33,6 +33,12 @@ class Func
         file_put_contents($path, $msg.PHP_EOL,FILE_APPEND);
 
     }
+    public static function debug($msg)
+    {
+        $path = BASEPATH . '/logs/debug_' . date('Ymd_h') . '.log';
+        file_put_contents($path, $msg.PHP_EOL,FILE_APPEND);
+
+    }
     public static function sizecount($filesize)
     {
         if ($filesize == null || $filesize == '' || $filesize == 0) return '0';

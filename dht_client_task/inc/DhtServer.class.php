@@ -3,7 +3,7 @@ class DhtServer{
     public static function join_dht($table,$bootstrap_nodes){
         if(count($table) == 0){
             foreach($bootstrap_nodes as $node){
-                echo '路由表为空 将自身伪造的ID 加入预定义的DHT网络 '.$node[0].PHP_EOL;
+//                echo '路由表为空 将自身伪造的ID 加入预定义的DHT网络 '.$node[0].PHP_EOL;
                 self::find_node(array(gethostbyname($node[0]), $node[1])); //将自身伪造的ID 加入预定义的DHT网络
             }
         }
