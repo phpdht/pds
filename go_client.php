@@ -66,11 +66,7 @@ $serv->set(array(
 $serv->on('WorkerStart', function(\Swoole\Server $serv, $worker_id){
    global $table,$bootstrap_nodes;
 
-    swoole_timer_after(AUTO_FIND_AFTER, function () {
-        global $table,$bootstrap_nodes;
-        DhtServer::join_dht($table,$bootstrap_nodes);
-        echo "swoole_timer_after  \n";
-    });
+
 
     swoole_timer_tick(AUTO_FIND_TIME, function ($timer_id) {
         global $table,$bootstrap_nodes;
