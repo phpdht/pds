@@ -1,17 +1,20 @@
 version: '2'
 networks:
-  ggggg:
-    external: true
+  default:
+    external:
+      name: ggggg
 services:
   php74:
-    build: .
-    image: phpdhtspider:p70
+    image: registry.cn-zhangjiakou.aliyuncs.com/xssg/phpdhtspider:laster
     privileged: false
     restart: unless-stopped
-    container_name: phpdhtspider
+    container_name: phpdhtspider_client
+    environment:
+      - SERVER_IP:frpchk
+    command:
+      - php
+      - go_client.php
     volumes:
-      - .:/var/www/html
-    tty: true
+      - ./logs:/var/www/html/dht_client_task/logs
     ports:
-      - 31738:31738
       - 31739:31739

@@ -8,8 +8,12 @@ class Func
      * @param $msg
      * @param int $type
      */
-    public static function Logs($msg, $type = 1)
+    public static function Logs($msg, $type = 0)
     {
+        if ($type == 0) {
+            $path = BASEPATH . '/logs/log_' . date('Ymd') . '.log';
+
+        }
         if ($type == 1) { //启动信息
             $path = BASEPATH . '/logs/start_' . date('Ymd') . '.log';
         } elseif ($type == 2) { //hash信息
@@ -23,6 +27,12 @@ class Func
         fclose($fp);
     }
 
+    public static function Log($msg)
+    {
+        $path = BASEPATH . '/logs/log_' . date('Ymd') . '.log';
+        file_put_contents($path, $msg,FILE_APPEND);
+
+    }
     public static function sizecount($filesize)
     {
         if ($filesize == null || $filesize == '' || $filesize == 0) return '0';

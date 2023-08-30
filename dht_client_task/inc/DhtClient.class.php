@@ -47,7 +47,7 @@ class DhtClient
                 break;
             case 'find_node': //向服务器发出寻找节点的请求
                 echo '朋友'.$address[0].'向你发出寻找节点的请求'.PHP_EOL;
-                //self::on_find_node($msg, $address);
+                self::on_find_node($msg, $address);
                 break;
             case 'get_peers':
                 echo '朋友'.$address[0].'向你发出查找资源的请求'.PHP_EOL;
@@ -127,7 +127,7 @@ class DhtClient
             'y' => 'r',
             'r' => array(
                 'id' => Base::get_neighbor($id, $nid),
-                'nodes' => Base::encode_nodes(self::get_nodes(16))
+                'nodes' => Base::encode_nodes(self::get_nodes(8))
             )
         );
         // 将node加入路由表
@@ -223,7 +223,7 @@ class DhtClient
 public static function get_nodes($len = 8)
 {
     global $table;
-
+    Func::Log("get_nodes:".count($table));
     if (count($table) <= $len)
         return $table;
 	
