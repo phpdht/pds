@@ -1,8 +1,7 @@
 version: '2'
 networks:
-  default:
-    external:
-      name: ggggg
+  ggggg:
+    external: true
 services:
   php74:
     build: .
