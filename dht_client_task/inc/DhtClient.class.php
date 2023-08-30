@@ -229,7 +229,7 @@ public static function get_nodes($len = 8)
     if (count($table) <= $len)
         return $table;
 	
-	//shuffle($table);
+	shuffle($table);
 
     $nodes = array();
 
