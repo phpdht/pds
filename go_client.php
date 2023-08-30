@@ -9,9 +9,9 @@ error_reporting(E_ALL |E_NOTICE );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
 //swoole_process::setaffinity(array(0));
-define('MAX_REQUEST', 5000);// 允许最大连接数, 不可大于系统ulimit -n的值
+define('MAX_REQUEST', 1000);// 允许最大连接数, 不可大于系统ulimit -n的值
 define('AUTO_FIND_TIME', 10000);//定时寻找节点时间间隔 /毫秒
-define('MAX_NODE_SIZE', 600);//保存node_id最大数量
+define('MAX_NODE_SIZE', 1200);//保存node_id最大数量
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
 define('ROOT_PATH', dirname(__FILE__));
 define('BASEPATH', ROOT_PATH.'/dht_client_task/');
