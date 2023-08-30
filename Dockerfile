@@ -2,31 +2,10 @@
 
 
 FROM php:7.1.33-cli
-
+COPY sources.list /etc/apt/sources.list
 ENV REFRESH_NUMBER 2
 
-RUN  sed -i 's/deb http:\/\/deb.debian.org\/debian /deb https:\/\/mirrors.aliyun.com\/debian /g' /etc/apt/sources.list
-RUN  sed -i 's/deb http:\/\/security.debian.org\/debian-security /deb https:\/\/mirrors.aliyun.com\/debian-security /g' /etc/apt/sources.list
 
-#    # deb http://snapshot.debian.org/archive/debian/20191118T000000Z buster main
-     #deb http://deb.debian.org/debian buster main
-     ## deb http://snapshot.debian.org/archive/debian-security/20191118T000000Z buster/updates main
-     #deb http://security.debian.org/debian-security buster/updates main
-     ## deb http://snapshot.debian.org/archive/debian/20191118T000000Z buster-updates main
-     #deb http://deb.debian.org/debian buster-updates main
-
-
-#deb http://mirrors.aliyun.com/debian/ buster main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian/ buster main contrib non-free
-#
-#deb http://mirrors.aliyun.com/debian-security/ buster/updates main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian-security/ buster/updates main contrib non-free
-#
-#deb http://mirrors.aliyun.com/debian/ buster-updates main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian/ buster-updates main contrib non-free
-#
-#deb http://mirrors.aliyun.com/debian/ buster-backports main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian/ buster-backports main contrib non-free
 RUN apt-get update
 RUN apt-get install -y vim wget zip zlib1g-dev
 
