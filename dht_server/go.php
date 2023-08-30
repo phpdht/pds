@@ -11,7 +11,7 @@ ini_set("memory_limit","-1");
 define('BASEPATH', dirname(__FILE__));
 $config = require_once BASEPATH.'/config.php';
 define('WORKER_NUM', 2);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
-define('MAX_REQUEST', 0);// 允许最大连接数, 不可大于系统ulimit -n的值
+define('MAX_REQUEST', 2000);// 允许最大连接数, 不可大于系统ulimit -n的值
 require_once BASEPATH .'/inc/Func.class.php';
 require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
 require_once BASEPATH .'/inc/Base.class.php';//基础操作类
@@ -23,7 +23,7 @@ swoole_set_process_name("php_dht_server:[master] worker");
 
 //SWOOLE_PROCESS 使用进程模式，业务代码在Worker进程中执行
 //SWOOLE_SOCK_UDP 创建udp socket
-$serv = new swoole_server('0.0.0.0', 2345, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => WORKER_NUM,//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程

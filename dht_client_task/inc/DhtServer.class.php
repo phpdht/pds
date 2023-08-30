@@ -3,13 +3,13 @@ class DhtServer{
     public static function join_dht($table,$bootstrap_nodes){
         if(count($table) == 0){
             foreach($bootstrap_nodes as $node){
-                //echo '路由表为空 将自身伪造的ID 加入预定义的DHT网络 '.$node[0].PHP_EOL;
+                echo '路由表为空 将自身伪造的ID 加入预定义的DHT网络 '.$node[0].PHP_EOL;
                 self::find_node(array(gethostbyname($node[0]), $node[1])); //将自身伪造的ID 加入预定义的DHT网络
             }
         }
     }
 
-    public static function auto_find_node($table,$bootstrap_nodes){
+    public static function auto_find_node($table){
         $wait = 1.0 / MAX_NODE_SIZE;
         while(count($table) >0 ){
             // 从路由表中删除第一个node并返回被删除的node
@@ -51,6 +51,7 @@ class DhtServer{
         }
 		$ip = $address[0];
 		$data = Base::encode($msg);
-        $serv->sendto($ip, $address[1], $data);
+        $re =  $serv->sendto($ip, $address[1], $data);
+        var_dump($re);
     }
 }

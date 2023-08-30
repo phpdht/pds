@@ -14,3 +14,4 @@ services:
     tty: true
     ports:
       - 31738:31738
+      - 31739:31739

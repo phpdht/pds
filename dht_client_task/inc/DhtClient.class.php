@@ -22,7 +22,7 @@ class DhtClient
         if (!isset($msg['r']['nodes']) || !isset($msg['r']['nodes'][1])) return;
         // 对nodes数据进行解码
 
-        //echo '朋友'.$address[0].'在线'.PHP_EOL;
+        echo '朋友'.$address[0].'在线'.PHP_EOL;
         $nodes = Base::decode_nodes($msg['r']['nodes']);
         // 对nodes循环处理
         foreach ($nodes as $node) {
@@ -40,23 +40,22 @@ class DhtClient
      */
     public static function request_action($msg, $address)
     {
-	
         switch ($msg['q']) {
             case 'ping'://确认你是否在线
-                //echo '朋友'.$address[0].'正在确认你是否在线'.PHP_EOL;
+                echo '朋友'.$address[0].'正在确认你是否在线'.PHP_EOL;
                 self::on_ping($msg, $address);
                 break;
             case 'find_node': //向服务器发出寻找节点的请求
-                //echo '朋友'.$address[0].'向你发出寻找节点的请求'.PHP_EOL;
+                echo '朋友'.$address[0].'向你发出寻找节点的请求'.PHP_EOL;
                 //self::on_find_node($msg, $address);
                 break;
             case 'get_peers':
-                //echo '朋友'.$address[0].'向你发出查找资源的请求'.PHP_EOL;
+                echo '朋友'.$address[0].'向你发出查找资源的请求'.PHP_EOL;
                 // 处理get_peers请求
                 self::on_get_peers($msg, $address);
                 break;
             case 'announce_peer':
-                //echo '朋友' . $address[0] . '找到资源了 通知你一声' . PHP_EOL;
+                echo '朋友' . $address[0] . '找到资源了 通知你一声' . PHP_EOL;
                 // 处理announce_peer请求
                 self::on_announce_peer($msg, $address);
                 break;
@@ -178,15 +177,12 @@ class DhtClient
      */
     public static function on_announce_peer($msg, $address)
     {
-        global $nid,$config;
+        global $nid,$config,$serv,$task_num;
         $infohash = $msg['a']['info_hash'];
         $port = $msg['a']['port'];
         $token = $msg['a']['token'];
         $id = $msg['a']['id'];
         $tid = $msg['t'];
-
-        //echo 'Ip:' . $address[0] . ' Port:' . $port .' test connent!'. PHP_EOL;
-        //return;
 
         // 验证token是否正确
         if (substr($infohash, 0, 2) != $token) return;
@@ -212,41 +208,16 @@ class DhtClient
             )
         );
 
-        // 发送请求回复
-        DhtServer::send_response($msg, $address);
-
         if($address[0] == self::$last_ip){
             return;
         }
         self::$last_ip = $ip = $address[0];
-
         // 发送请求回复
         DhtServer::send_response($msg, $address);
-   
-        //swoole_process::wait(false);
-        $process = new swoole_process(function (swoole_process $worker) use($ip,$port,$infohash,$config){
-            $client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_SYNC);
-            if (!@$client->connect($ip, $port, 5))
-            {
-                // echo ("connect failed. Error: {$client->errCode}".PHP_EOL);
-            }else{
-                //echo 'connent success! '.$ip.':'.$port.PHP_EOL;
-                $rs = Metadata::download_metadata($client,$infohash);
-                if($rs != false){
-                    //echo $ip.':'.$port.' udp send！'.PHP_EOL;
-                    DhtServer::send_response($rs,array($config['server_ip'],$config['server_port']));
-                    //echo  $rs['name'].PHP_EOL;
-                }else{
-                    //echo 'false'.date('Y-m-d H:i:s').PHP_EOL;
-                }
-                $client->close(true);
-            }
-            $worker->exit(0);
-            $worker->close();
-        }, false);
-        $process->start();
-		//swoole_process::wait(false);
-        //echo $ip.PHP_EOL;
+
+		$task_id = $serv->task(array('ip'=>$ip,'port'=>$port,'infohash'=>swoole_serialize::pack($infohash)));
+		echo "Dispath AsyncTask: [id=$task_id]\n";
+		return;
     }
 
 public static function get_nodes($len = 8)

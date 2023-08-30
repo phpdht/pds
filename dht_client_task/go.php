@@ -11,9 +11,9 @@ ini_set("memory_limit","-1");
 define('BASEPATH', dirname(__FILE__));
 $config = require_once BASEPATH.'/config.php';
 //swoole_process::setaffinity(array(0));
-define('MAX_REQUEST', 0);// 允许最大连接数, 不可大于系统ulimit -n的值
-define('AUTO_FIND_TIME', 3000);//定时寻找节点时间间隔 /毫秒
-define('MAX_NODE_SIZE', 300);//保存node_id最大数量
+define('MAX_REQUEST', 5000);// 允许最大连接数, 不可大于系统ulimit -n的值
+define('AUTO_FIND_TIME', 10000);//定时寻找节点时间间隔 /毫秒
+define('MAX_NODE_SIZE', 600);//保存node_id最大数量
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
 
 require_once BASEPATH . '/inc/Node.class.php'; //node_id类
@@ -31,14 +31,15 @@ $time = microtime(true);
 $bootstrap_nodes = array(
     array('router.bittorrent.com', 6881),
     array('dht.transmissionbt.com', 6881),
-    array('router.utorrent.com', 6881)
+    array('router.utorrent.com', 6881),
+    ['dht.aelitis.com',6881]
 );
 
 Func::Logs(date('Y-m-d H:i:s', time()) . " - 服务启动...".PHP_EOL,1);//记录启动日志
 
 //SWOOLE_PROCESS 使用进程模式，业务代码在Worker进程中执行
 //SWOOLE_SOCK_UDP 创建udp socket
-$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+$serv = new swoole_server('0.0.0.0', 31739, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => $config['worker_num'],//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
@@ -59,7 +60,7 @@ $serv->on('WorkerStart', function($serv, $worker_id){
         if(count($table) == 0){
            DhtServer::join_dht($table,$bootstrap_nodes);
         }else{
-		   DhtServer::auto_find_node($table,$bootstrap_nodes);
+		   DhtServer::auto_find_node($table);
 		}
     });
 });
