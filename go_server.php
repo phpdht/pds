@@ -8,14 +8,19 @@
 error_reporting(E_ERROR );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
-define('BASEPATH', dirname(__FILE__));
-$config = require_once BASEPATH.'/config.php';
+define('ROOT_PATH', dirname(__FILE__));
+define('BASEPATH',ROOT_PATH.'/dht_server/');
+require_once ROOT_PATH . '/Env.php';
+
+$config = require_once BASEPATH . '/config.php';
 define('WORKER_NUM', 2);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
-define('MAX_REQUEST', 2000);// 允许最大连接数, 不可大于系统ulimit -n的值
-require_once BASEPATH .'/inc/Func.class.php';
+define('MAX_REQUEST', 1000);// 允许最大连接数, 不可大于系统ulimit -n的值
+require_once BASEPATH . '/inc/Func.class.php';
 require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
-require_once BASEPATH .'/inc/Base.class.php';//基础操作类
+require_once BASEPATH . '/inc/Base.class.php';//基础操作类
 require_once BASEPATH . '/inc/Db.class.php';
+
+
 Func::Logs(date('Y-m-d H:i:s', time()) . " - 服务启动...".PHP_EOL,1);//记录启动日志
 
 
@@ -47,6 +52,7 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
 });
 
 $serv->on('Receive', function($serv, $fd, $from_id, $data){
+    echo 'Receive';
     if(strlen($data) == 0){
 		$serv->close($fd,true);
         return false;

@@ -5,24 +5,32 @@
  * 设置服务器 ulimit -n 100000
  * 关闭防火墙和后台规则 防止端口不通
  */
-error_reporting(E_ERROR );
+error_reporting(E_ALL |E_NOTICE );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
-define('BASEPATH', dirname(__FILE__));
-$config = require_once BASEPATH.'/config.php';
 //swoole_process::setaffinity(array(0));
 define('MAX_REQUEST', 5000);// 允许最大连接数, 不可大于系统ulimit -n的值
 define('AUTO_FIND_TIME', 10000);//定时寻找节点时间间隔 /毫秒
 define('MAX_NODE_SIZE', 600);//保存node_id最大数量
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
+define('ROOT_PATH', dirname(__FILE__));
+define('BASEPATH', ROOT_PATH.'/dht_client_task/');
 
-require_once BASEPATH . '/inc/Node.class.php'; //node_id类
-require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
-require_once BASEPATH .'/inc/Base.class.php';//基础操作类
-require_once BASEPATH .'/inc/Func.class.php';
+
+
+require_once ROOT_PATH . '/Env.php';
+
+
+
+$config = require_once BASEPATH . '/config.php';
+
+require_once ROOT_PATH . '/dht_server/inc/Node.class.php'; //node_id类
+require_once ROOT_PATH . '/dht_server/inc/Bencode.class.php';//bencode编码解码类
+require_once ROOT_PATH . '/dht_server/inc/Base.class.php';//基础操作类
+require_once ROOT_PATH . '/dht_server/inc/Func.class.php';
 require_once BASEPATH . '/inc/DhtClient.class.php';
 require_once BASEPATH . '/inc/DhtServer.class.php';
-require_once BASEPATH . '/inc/Metadata.class.php';
+require_once ROOT_PATH . '/dht_server/inc/Metadata.class.php';
 
 $nid = Base::get_node_id();// 伪造设置自身node id
 $table = array();// 初始化路由表

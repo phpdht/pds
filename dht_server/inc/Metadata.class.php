@@ -134,7 +134,7 @@ public static function request_metadata($client, $ut_metadata, $piece)
             return false;
         }
 
-		        if($data_length > self::$PIECE_LENGTH * 1000){
+		if($data_length > self::$PIECE_LENGTH * 1000){
             return false;
         }
 
@@ -142,7 +142,7 @@ public static function request_metadata($client, $ut_metadata, $piece)
         while (true){
             if($data_length > 8192){
                 if(($_data = $client->recv(8192, true)) == false){
-                    echo $data_length.PHP_EOL;
+                    //echo $data_length.PHP_EOL;
                     return false;
                 }else{
                     $data .= $_data;
