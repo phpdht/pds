@@ -4,7 +4,7 @@
 FROM php:7.1.33-cli
 
 ENV REFRESH_NUMBER 2
-RUN cat /etc/apt/sources.list
+
 RUN  sed -i 's/deb http:\/\/deb.debian.org\/debian /deb https:\/\/mirrors.aliyun.com\/debian /g' /etc/apt/sources.list
 RUN  sed -i 's/deb http:\/\/security.debian.org\/debian-security /deb https:\/\/mirrors.aliyun.com\/debian-security /g' /etc/apt/sources.list
 
@@ -42,9 +42,8 @@ RUN apt-get install -y \
 # 安装composer
 RUN curl -sS https://getcomposer.org/installer | php;mv composer.phar /usr/local/bin/composer;composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
-RUN pecl install swoole-1.10.5 --with-php-config=/usr/local/bin/php-config --enable-swoole-debug=yes --enable-sockets=yes --enable-openssl=yes --enable-http2=yes --enable-async-redis=yes --enable-mysqlnd=yes
+RUN pecl install swoole-1.10.5 && docker-php-ext-enable swoole
 
-RUN docker-php-ext-enable swoole
 RUN composer config -g repos.packagist composer https://mirrors.cloud.tencent.com/composer/
 
 WORKDIR /var/www/html
