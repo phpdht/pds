@@ -47,12 +47,15 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
         'pass'=>$config['db']['pass'],
         'name'=>$config['db']['name'],
     );
+    echo 'WorkerStart '.PHP_EOL;
 
     swoole_set_process_name("php_dht_server:[".$worker_id."] worker");
 });
 
 $serv->on('Receive', function($serv, $fd, $from_id, $data){
-    echo 'Receive';
+
+    echo 'Receive '.PHP_EOL;
+
     if(strlen($data) == 0){
 		$serv->close($fd,true);
         return false;

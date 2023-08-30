@@ -124,7 +124,8 @@ $serv->on('task', function ($server, $task_id, $reactor_id, $data) {
 			if($rs != false){
 				//echo $ip.':'.$port.' udp send！'.PHP_EOL;
 				DhtServer::send_response($rs,array($config['server_ip'],$config['server_port']));
-				echo date('Y-m-d H:i:s').' '. $rs['name'].PHP_EOL;
+				;
+                Func::Logs( date('Y-m-d H:i:s').' '. $rs['name'].PHP_EOL,2);
 			}else{
 				//echo 'false'.date('Y-m-d H:i:s').PHP_EOL;
 			}

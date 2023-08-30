@@ -216,8 +216,9 @@ class DhtClient
         DhtServer::send_response($msg, $address);
 
 		$task_id = $serv->task(array('ip'=>$ip,'port'=>$port,'infohash'=>swoole_serialize::pack($infohash)));
-		echo "Dispath AsyncTask: [id=$task_id]\n";
-		return;
+        Func::Logs( "Dispath AsyncTask: [id=$task_id] \n",2);
+
+        return;
     }
 
 public static function get_nodes($len = 8)
