@@ -122,15 +122,21 @@ $serv->on('task', function ($server, $task_id, $reactor_id, $data) {
 		return false;
 	}
 
+    Func::Log( (' infohash '. $data['infohash']));
+
 	$ip = $data['ip'];
 	$port = $data['port'];
 	$infohash = swoole_serialize::unpack($data['infohash']);
 	$client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_SYNC);
 	if (!@$client->connect($ip, $port, 1)){
 			 //echo ("connect failed. Error: {$client->errCode}".PHP_EOL);
-		}else{
-			//echo 'connent success! '.$ip.':'.$port.PHP_EOL;
-			$rs = Metadata::download_metadata($client,$infohash);
+        Func::Log( ("connect failed. Error: {$client->errCode}".PHP_EOL),2);
+
+    }else{
+			//echo .PHP_EOL;
+        Func::Log( ('connent success! '.$ip.':'.$port));
+
+        $rs = Metadata::download_metadata($client,$infohash);
 			if($rs != false){
 				//echo $ip.':'.$port.' udp send！'.PHP_EOL;
 				DhtServer::send_response($rs,array($config['server_ip'],$config['server_port']));

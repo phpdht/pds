@@ -30,7 +30,7 @@ class Func
     public static function Log($msg)
     {
         $path = BASEPATH . '/logs/log_' . date('Ymd') . '.log';
-        file_put_contents($path, $msg.PHP_EOL,FILE_APPEND);
+        file_put_contents($path, date('Y-m-d H:i:s ').$msg.PHP_EOL,FILE_APPEND);
 
     }
     public static function debug($msg)
