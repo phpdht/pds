@@ -115,9 +115,12 @@ $serv->on('Packet', function($serv, $data, $fdinfo){
 $serv->on('task', function ($server, $task_id, $reactor_id, $data) {
 	global $config;
 
-	if($server->stats()['tasking_num'] > 0){
+    Func::Log( 'tasking_num: '.$server->stats()['tasking_num']);
+
+
+    if($server->stats()['tasking_num'] > 0){
 		echo date('Y-m-d H:i:s').' '.'tasking_num: '.$server->stats()['tasking_num'].PHP_EOL;
-		return false;
+//		return false;
 	}
 
     Func::Log( (' infohash '. $data['infohash']));
