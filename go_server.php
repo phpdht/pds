@@ -36,7 +36,7 @@ $serv->set(array(
     'max_request' => MAX_REQUEST, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
     'dispatch_mode' => Env::get('DISP_MODE',7),//保证同一个连接发来的数据只会被同一个worker处理
     'log_file' => BASEPATH . '/logs/error.log',
-    'max_conn'=>65535,//最大连接数
+    'max_conn'=>65550,//最大连接数
     'heartbeat_check_interval' => 5, //启用心跳检测，此选项表示每隔多久轮循一次，单位为秒
     'heartbeat_idle_time' => 10, //与heartbeat_check_interval配合使用。表示连接最大允许空闲的时间
 ));
@@ -93,7 +93,7 @@ $serv->on('Receive', function($serv, $fd, $from_id, $data){
             Db::query("update bt set `hot` = `hot` + 1 where infohash = '$rs[infohash]'");
         }
     }
-//    $serv->close($fd,true);
+    $serv->close($fd,true);
 });
 
 $serv->start();
