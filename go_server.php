@@ -30,7 +30,7 @@ swoole_set_process_name("php_dht_server:[master] worker");
 
 //SWOOLE_PROCESS 使用进程模式，业务代码在Worker进程中执行
 //SWOOLE_SOCK_UDP 创建udp socket
-$serv = new swoole_server('0.0.0.0', 2345, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => WORKER_NUM,//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
@@ -55,7 +55,7 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
 });
 
 $serv->on('Receive', function($serv, $fd, $from_id, $data){
-    echo "Receive ".PHP_EOL;
+    echo "Receive $fd ".PHP_EOL;
     if(strlen($data) == 0){
         $serv->close($fd,true);
         return false;
