@@ -5,9 +5,10 @@
  * 设置服务器 ulimit -n 100000
  * 关闭防火墙和后台规则 防止端口不通
  */
-error_reporting(E_ERROR );
+//error_reporting(E_ERROR );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
+
 define('ROOT_PATH', dirname(__FILE__));
 define('BASEPATH',ROOT_PATH.'/dht_server/');
 require_once ROOT_PATH . '/Env.php';
@@ -31,7 +32,7 @@ swoole_set_process_name("php_dht_server:[master] worker");
 
 //SWOOLE_PROCESS 使用进程模式，业务代码在Worker进程中执行
 //SWOOLE_SOCK_UDP 创建udp socket
-$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_BASE, SWOOLE_SOCK_UDP);
+$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => WORKER_NUM,//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
