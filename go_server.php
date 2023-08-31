@@ -17,7 +17,7 @@ require_once ROOT_PATH . '/Env.php';
 
 
 $config = require_once BASEPATH.'/config.php';
-define('WORKER_NUM', 2);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
+define('WORKER_NUM', swoole_cpu_num()*2);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
 define('MAX_REQUEST', 10000);// 允许最大连接数, 不可大于系统ulimit -n的值
 require_once BASEPATH .'/inc/Func.class.php';
 require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
