@@ -55,8 +55,8 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
 
 $serv->on('Receive', function($serv, $fd, $from_id, $data){
 
-    echo 'Receive '.PHP_EOL;
-    Func::Log('Receive');
+    echo "Receive $fd ".PHP_EOL;
+    Func::Log("Receive $fd");
     if(strlen($data) == 0){
 		$serv->close($fd,true);
         return false;
@@ -93,7 +93,7 @@ $serv->on('Receive', function($serv, $fd, $from_id, $data){
             Db::query("update bt set `hot` = `hot` + 1 where infohash = '$rs[infohash]'");
         }
     }
-    $serv->close($fd,true);
+//    $serv->close($fd,true);
 });
 
 $serv->start();
