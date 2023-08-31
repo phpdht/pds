@@ -21,7 +21,7 @@ RUN apt-get install -y \
 # 安装composer
 RUN curl -sS https://getcomposer.org/installer | php;mv composer.phar /usr/local/bin/composer;composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
-RUN pecl install swoole-1.10.5 && docker-php-ext-enable swoole
+RUN pecl install swoole-1.9.18 && docker-php-ext-enable swoole
 
 RUN composer config -g repos.packagist composer https://mirrors.cloud.tencent.com/composer/
 

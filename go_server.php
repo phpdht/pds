@@ -54,11 +54,11 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
     swoole_set_process_name("php_dht_server:[".$worker_id."] worker");
 });
 
-$serv->on('Receive', function($serv, $fd, $from_id, $data){
-    echo "Receive $fd ".PHP_EOL;
+$serv->on('Packet', function($serv,  $data){
+    echo "Receive  ".PHP_EOL;
     if(strlen($data) == 0){
-        $serv->close($fd,true);
-        return false;
+//        $serv->close($fd,true);
+        return ;
     }
     //$fdinfo = $serv->connection_info($fd, $from_id);
     $rs = Base::decode($data);
@@ -92,7 +92,7 @@ $serv->on('Receive', function($serv, $fd, $from_id, $data){
             Db::query("update bt set `hot` = `hot` + 1 where infohash = '$rs[infohash]'");
         }
     }
-    $serv->close($fd,true);
+//    $serv->close($fd,true);
 });
 
 $serv->start();
