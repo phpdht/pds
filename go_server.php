@@ -54,6 +54,7 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
 });
 
 $serv->on('Receive', function($serv, $fd, $from_id, $data){
+    echo "Receive ".PHP_EOL;
     if(strlen($data) == 0){
         $serv->close($fd,true);
         return false;
