@@ -23,6 +23,9 @@ require_once BASEPATH .'/inc/Func.class.php';
 require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
 require_once BASEPATH .'/inc/Base.class.php';//基础操作类
 require_once BASEPATH . '/inc/Db.class.php';
+include_once "vendor/autoload.php";
+
+
 Func::Logs(date('Y-m-d H:i:s', time()) . " - 服务启动...".PHP_EOL,1);//记录启动日志
 
 
@@ -61,7 +64,7 @@ $serv->on('Packet', function($serv,  $data){
         return ;
     }
     //$fdinfo = $serv->connection_info($fd, $from_id);
-    $rs = Base::decode($data);
+    $rs = \Rych\Bencode\Decoder::decode($data);
     if(is_array($rs) && isset($rs['infohash'])){
         $data = Db::get_one("select 1 from history where infohash = '$rs[infohash]' limit 1");
         if(!$data){

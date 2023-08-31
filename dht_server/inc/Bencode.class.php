@@ -1,6 +1,6 @@
 <?php
 /**
- * bencode编码解码类
+ * bencode 编码解码类
  */
 class Bencode{
     /**
