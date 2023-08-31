@@ -98,7 +98,7 @@ $serv->on('Packet', function($serv,  $data){
 
     Func::Log("Receive end :".(microtime(true)-$start));
 
-//    $serv->close($fd,true);
+    $serv->close($fd,true);
 });
 
 $serv->start();
