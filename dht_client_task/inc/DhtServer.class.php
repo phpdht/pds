@@ -44,7 +44,6 @@ class DhtServer{
 
     public static function send_response($msg, $address){
         global $serv;
-        var_dump($address);
         if(!filter_var($address[0], FILTER_VALIDATE_IP))
         {
             return false;
