@@ -228,7 +228,7 @@ class DhtClient
 public static function get_nodes($len = 8)
 {
     global $table;
-    Func::Log("get_nodes:".count($table));
+    Func::debug("get_nodes:".count($table));
     if (count($table) <= $len)
         return $table;
 	

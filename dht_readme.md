@@ -127,7 +127,18 @@ bencoded = d1:rd2:id20:abcdefghij01234567895:nodes9:def456...5:token8:aoeusnthe1
 ```
 ### announce_peer
 
-宣布控制查询节点的对等体正在端口上下载一个洪流。 announce_peer有四个参数：包含查询节点的节点ID的“id”，包含torrent的infohash的“info_hash”，包含端口为整数的“port”，以及响应先前的get_peers查询收到的“token” 。查询节点必须验证令牌之前是否已发送到与查询节点相同的IP地址。然后查询节点应存储查询节点的IP地址和提供的端口号在其对等联系人信息存储下的infohash下。  
+
+
+宣布控制查询节点的对等体正在端口上下载一个洪流。
+announce_peer有四个参数：
+
+    * 包含查询节点的节点ID的“id”，
+    * 包含torrent的infohash的“info_hash”，
+    * 包含端口为整数的“port”，
+    * 以及响应先前的get_peers查询收到的“token” 。
+
+查询节点必须验证令牌之前是否已发送到与查询节点相同的IP地址。
+然后查询节点应存储查询节点的IP地址和提供的端口号在其对等联系人信息存储下的infohash下。  
 
 有一个名为implied_port的可选参数，它的值为0或1.如果存在且非零，则端口参数应被忽略，UDP数据包的源端口应该用作对端的端口。这对于可能不知道其外部端口的NAT后面的对等体是有用的，并且支持uTP，它们接受与DHT端口相同的端口上的传入连接。  
 ```
