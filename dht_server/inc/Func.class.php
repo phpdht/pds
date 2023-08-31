@@ -10,6 +10,9 @@ class Func
      */
     public static function Logs($msg, $type = 0)
     {
+        if(NO_LOG){
+            return true;
+        }
         if ($type == 0) {
             $path = BASEPATH . '/logs/log_' . date('Ymd') . '.log';
 
@@ -29,12 +32,18 @@ class Func
 
     public static function Log($msg)
     {
+        if(NO_LOG){
+            return true;
+        }
         $path = BASEPATH . '/logs/log_' . date('Ymd') . '.log';
         file_put_contents($path, date('Y-m-d H:i:s ').$msg.PHP_EOL,FILE_APPEND);
 
     }
     public static function debug($msg)
     {
+        if(NO_LOG){
+            return true;
+        }
         $path = BASEPATH . '/logs/debug_' . date('Ymd_h') . '.log';
         file_put_contents($path, $msg.PHP_EOL,FILE_APPEND);
 

@@ -18,13 +18,12 @@ define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
 define('ROOT_PATH', dirname(__FILE__));
 define('BASEPATH', ROOT_PATH.'/dht_client_task/');
 
-
-
 require_once ROOT_PATH . '/Env.php';
 
 
 
 $config = require_once BASEPATH . '/config.php';
+define('NO_LOG', Env::get('NO_LOG',0));// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
 
 require_once ROOT_PATH . '/dht_server/inc/Node.class.php'; //node_id类
 require_once ROOT_PATH . '/dht_server/inc/Bencode.class.php';//bencode编码解码类
