@@ -7,7 +7,7 @@ ENV REFRESH_NUMBER 2
 
 
 RUN apt-get update
-RUN apt-get install -y vim wget zip zlib1g-dev
+RUN apt-get install -y vim wget zip zlib1g-dev inetutils-ping
 
 RUN docker-php-ext-install bcmath mbstring pdo pdo_mysql zip;docker-php-ext-enable pdo pdo_mysql;
 

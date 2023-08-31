@@ -44,14 +44,16 @@ class DhtServer{
 
     public static function send_response($msg, $address){
         global $serv;
-		
+        var_dump($address);
         if(!filter_var($address[0], FILTER_VALIDATE_IP))
         {
             return false;
         }
 		$ip = $address[0];
 		$data = Base::encode($msg);
+        var_dump($address);
         $re =  $serv->sendto($ip, $address[1], $data);
+        var_dump($re,$address);
         Func::Log('send_response hash'.serialize($re));
     }
 }

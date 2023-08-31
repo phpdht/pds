@@ -9,7 +9,7 @@ error_reporting(E_ERROR );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
 define('ROOT_PATH', dirname(__FILE__));
-define('BASEPATH',ROOT_PATH.'/dht_server/');
+define('BASEPATH',ROOT_PATH.'/dht_client_task/');
 require_once ROOT_PATH . '/Env.php';
 
 $config = require_once BASEPATH . '/config.php';
@@ -55,7 +55,7 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
 $serv->on('Receive', function($serv, $fd, $from_id, $data){
 
     echo 'Receive '.PHP_EOL;
-
+    Func::Log('Receive');
     if(strlen($data) == 0){
 		$serv->close($fd,true);
         return false;

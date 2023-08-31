@@ -9,6 +9,10 @@ services:
     privileged: false
     restart: unless-stopped
     container_name: phpdhtspider
+    networks:
+      - ggggg
+    environment:
+      - SERVER_IP=frpchk
     volumes:
       - .:/var/www/html
     tty: true
