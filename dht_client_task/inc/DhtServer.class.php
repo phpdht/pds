@@ -52,6 +52,6 @@ class DhtServer{
 		$ip = $address[0];
 		$data = Base::encode($msg);
         $re =  $serv->sendto($ip, $address[1], $data);
-
+        Func::Log('send_response hash'.serialize($re));
     }
 }
