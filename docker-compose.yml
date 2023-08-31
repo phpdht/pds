@@ -13,6 +13,7 @@ services:
       - ggggg
     environment:
       - SERVER_IP=frpchk
+      - SERVER_PORT=33509
     volumes:
       - .:/var/www/html
     tty: true

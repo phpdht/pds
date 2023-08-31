@@ -22,6 +22,7 @@ require_once BASEPATH . '/inc/Db.class.php';
 
 
 Func::Logs(date('Y-m-d H:i:s', time()) . " - 服务启动...".PHP_EOL,1);//记录启动日志
+Func::Logs(serialize($config),1);//记录启动日志
 
 
 swoole_set_process_name("php_dht_server:[master] worker");
