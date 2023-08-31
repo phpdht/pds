@@ -65,10 +65,8 @@
 		
 		public static function get_one($sql, $func = '')
 		{
-			if (!preg_match("/limit/i", $sql))
-			{
-				$sql = preg_replace("/[,;]$/i", '', trim($sql)) . " limit 1 ";
-			}
+
+
 			$rsid = self::query($sql);
 			if ($rsid === false)
 			{
