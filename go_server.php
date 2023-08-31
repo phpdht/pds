@@ -49,6 +49,7 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
         'pass'=>$config['db']['pass'],
         'name'=>$config['db']['name'],
     );
+    echo "WorkerStart ".PHP_EOL;
 
     swoole_set_process_name("php_dht_server:[".$worker_id."] worker");
 });
