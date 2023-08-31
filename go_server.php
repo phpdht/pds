@@ -29,12 +29,12 @@ swoole_set_process_name("php_dht_server:[master] worker");
 
 //SWOOLE_PROCESS 使用进程模式，业务代码在Worker进程中执行
 //SWOOLE_SOCK_UDP 创建udp socket
-$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+$serv = new swoole_server('0.0.0.0', 31738, SWOOLE_BASE, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => WORKER_NUM,//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
     'max_request' => MAX_REQUEST, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
-    'dispatch_mode' => 1,//保证同一个连接发来的数据只会被同一个worker处理
+    'dispatch_mode' => Env::get('DISP_MODE',7),//保证同一个连接发来的数据只会被同一个worker处理
     'log_file' => BASEPATH . '/logs/error.log',
     'max_conn'=>65535,//最大连接数
     'heartbeat_check_interval' => 5, //启用心跳检测，此选项表示每隔多久轮循一次，单位为秒
