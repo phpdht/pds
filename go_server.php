@@ -9,7 +9,7 @@ error_reporting(E_ERROR );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
 define('ROOT_PATH', dirname(__FILE__));
-define('BASEPATH',ROOT_PATH.'/dht_client_task/');
+define('BASEPATH',ROOT_PATH.'/dht_server/');
 require_once ROOT_PATH . '/Env.php';
 
 $config = require_once BASEPATH . '/config.php';
