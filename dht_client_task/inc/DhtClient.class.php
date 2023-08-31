@@ -120,6 +120,9 @@ class DhtClient
 
     public static function on_find_node($msg, $address)
     {
+        if(mt_rand(1,100) >5){
+            return;
+        }
 		
         global $nid;
         // 获取对端node id
