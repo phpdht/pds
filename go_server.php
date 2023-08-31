@@ -13,7 +13,7 @@ define('BASEPATH',ROOT_PATH.'/dht_server/');
 require_once ROOT_PATH . '/Env.php';
 
 $config = require_once BASEPATH . '/config.php';
-define('WORKER_NUM', 4);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
+define('WORKER_NUM', swoole_cpu_num()*2);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
 define('MAX_REQUEST', 1000);// 允许最大连接数, 不可大于系统ulimit -n的值
 require_once BASEPATH . '/inc/Func.class.php';
 require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
@@ -34,7 +34,7 @@ $serv->set(array(
     'worker_num' => WORKER_NUM,//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
     'max_request' => MAX_REQUEST, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
-    'dispatch_mode' => 2,//保证同一个连接发来的数据只会被同一个worker处理
+    'dispatch_mode' => 1,//保证同一个连接发来的数据只会被同一个worker处理
     'log_file' => BASEPATH . '/logs/error.log',
     'max_conn'=>65535,//最大连接数
     'heartbeat_check_interval' => 5, //启用心跳检测，此选项表示每隔多久轮循一次，单位为秒
@@ -93,7 +93,7 @@ $serv->on('Receive', function($serv, $fd, $from_id, $data){
             Db::query("update bt set `hot` = `hot` + 1 where infohash = '$rs[infohash]'");
         }
     }
-    $serv->close($fd,true);
+//    $serv->close($fd,true);
 });
 
 $serv->start();
