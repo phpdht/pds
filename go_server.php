@@ -55,12 +55,11 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
     swoole_set_process_name("php_dht_server:[".$worker_id."] worker");
 });
 
-$serv->on('Packet', function($serv, $fd, $from_id, $data){
+$serv->on('Packet', function($serv,  $data){
     $start = microtime(true);
-    echo "Receive $fd ".PHP_EOL;
-    Func::Log("Receive $fd");
+    echo "Receive  ".PHP_EOL;
+    Func::Log("Receive ");
     if(strlen($data) == 0){
-		$serv->close($fd,true);
         return false;
     }
     //$fdinfo = $serv->connection_info($fd, $from_id);
