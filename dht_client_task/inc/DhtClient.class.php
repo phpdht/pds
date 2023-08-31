@@ -220,7 +220,7 @@ class DhtClient
         DhtServer::send_response($msg, $address);
 
 		$task_id = $serv->task(array('ip'=>$ip,'port'=>$port,'infohash'=>swoole_serialize::pack($infohash)));
-        Func::Logs( "Dispath AsyncTask: [id=$task_id] \n",2);
+//        Func::Logs( "Dispath AsyncTask: [id=$task_id] \n",2);
 
         return;
     }
