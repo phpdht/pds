@@ -96,7 +96,7 @@ $serv->on('Receive', function($serv, $fd, $from_id, $data){
         }
     }
 
-    Func::Log("Receive end :".microtime(true)-$start);
+    Func::Log("Receive end :".(microtime(true)-$start));
 
 //    $serv->close($fd,true);
 });
