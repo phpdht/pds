@@ -17,10 +17,13 @@ class Metadata
     public static function download_metadata($client, $infohash)
     {
         try {
+            Func::Log( 'send_handshake infohash:'.$infohash);
+
             $packet = self::send_handshake($client, $infohash);
             if ($packet === false) {
                 return false;
             }
+            Func::Log( 'check_handshake infohash:'.$infohash);
 
             $check_handshake = self::check_handshake($packet, $infohash);
 
@@ -34,6 +37,7 @@ class Metadata
             if ($packet === false) {
                 return false;
             }
+            Func::Log( 'get_ut_metadata infohash:'.$infohash);
 
             $ut_metadata = self::get_ut_metadata($packet);
             $metadata_size = self::get_metadata_size($packet);
@@ -44,6 +48,8 @@ class Metadata
             //var_dump($ut_metadata);
             //var_dump($metadata_size);
             $metadata = array();
+            Func::Log( 'metadata_size infohash:'.$infohash);
+
             $piecesNum = ceil($metadata_size / (self::$PIECE_LENGTH));//2 ^ 14
             for ($i = 0; $i < $piecesNum; $i++) {
                 $request_metadata = self::request_metadata($client, $ut_metadata, $i);
@@ -75,6 +81,8 @@ class Metadata
 
             $_data = [];
             $metadata = Base::decode($metadata);
+            Func::Log( 'metadata ok infohash:'.$infohash);
+
             //Func::Logs(var_export($metadata,1),3);
             $_infohash = strtoupper(bin2hex($infohash));
             if(isset($metadata['name']) && $metadata['name'] !=''){
@@ -97,14 +105,20 @@ class Metadata
 
         } catch (Exception $e) {
             $client->close(true);
-            var_dump($e->getMessage());
+            Func::Log( ('download_metadata e:'.$e->getMessage()));
+
+//            var_dump($e->getMessage());
         }
 }
 
 //bep_0009
 public static function request_metadata($client, $ut_metadata, $piece)
 {
-    $msg = chr(self::$BT_MSG_ID) . chr($ut_metadata) . Base::encode(array("msg_type" => 0, "piece" => $piece));
+    $msg = chr(self::$BT_MSG_ID) . chr($ut_metadata) . Base::encode(array(
+                "msg_type" => 0,
+                "piece"    => $piece
+            )
+        );
     $msg_len = pack("I", strlen($msg));
     if (!BIG_ENDIAN) {
         $msg_len = strrev($msg_len);
