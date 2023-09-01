@@ -17,13 +17,15 @@ class Metadata
     public static function download_metadata($client, $infohash)
     {
         try {
-            Func::Log( 'send_handshake infohash:'.$infohash);
+            $_infohash = strtoupper(bin2hex($infohash));
+            $_infohash2 = substr($_infohash,0,3);
+            Func::Log( 'send_handshake infohash:'.$_infohash2);
 
             $packet = self::send_handshake($client, $infohash);
             if ($packet === false) {
                 return false;
             }
-            Func::Log( 'check_handshake infohash:'.$infohash);
+            Func::Log( 'check_handshake infohash:'.$_infohash2);
 
             $check_handshake = self::check_handshake($packet, $infohash);
 
@@ -37,7 +39,7 @@ class Metadata
             if ($packet === false) {
                 return false;
             }
-            Func::Log( 'get_ut_metadata infohash:'.$infohash);
+            Func::Log( 'get_ut_metadata infohash:'.$_infohash2);
 
             $ut_metadata = self::get_ut_metadata($packet);
             $metadata_size = self::get_metadata_size($packet);
@@ -48,7 +50,7 @@ class Metadata
             //var_dump($ut_metadata);
             //var_dump($metadata_size);
             $metadata = array();
-            Func::Log( 'metadata_size infohash:'.$infohash);
+            Func::Log( 'metadata_size infohash:'.$_infohash2);
 
             $piecesNum = ceil($metadata_size / (self::$PIECE_LENGTH));//2 ^ 14
             for ($i = 0; $i < $piecesNum; $i++) {
@@ -81,10 +83,10 @@ class Metadata
 
             $_data = [];
             $metadata = Base::decode($metadata);
-            Func::Log( 'metadata ok infohash:'.$infohash);
+            Func::Log( 'metadata ok infohash:'.$_infohash2);
 
             //Func::Logs(var_export($metadata,1),3);
-            $_infohash = strtoupper(bin2hex($infohash));
+//            $_infohash = strtoupper(bin2hex($infohash));
             if(isset($metadata['name']) && $metadata['name'] !=''){
                 $_data['name'] = Func::characet($metadata['name']);
                 $_data['infohash'] = $_infohash;
