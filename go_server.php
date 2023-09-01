@@ -64,7 +64,14 @@ $serv->on('Packet', function($serv,  $data){
         return ;
     }
     //$fdinfo = $serv->connection_info($fd, $from_id);
-    $rs = \Rych\Bencode\Decoder::decode($data);
+    try {
+        $rs = \Rych\Bencode\Decoder::decode($data);
+    }catch (\Exception $exception){
+        Func::Log($exception->getMessage().$exception->getTraceAsString());
+        return ;
+    }
+
+
     if(is_array($rs) && isset($rs['infohash'])){
         $data = Db::get_one("select 1 from history where infohash = '$rs[infohash]' limit 1");
         if(!$data){
