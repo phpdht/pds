@@ -47,12 +47,12 @@ class DhtClient
                 self::on_ping($msg, $address);
                 break;
             case 'find_node': //向服务器发出寻找节点的请求
-                echo "f".PHP_EOL;
+//                echo "f".PHP_EOL;
 //                echo '朋友'.$address[0].'向你发出寻找节点的请求'.PHP_EOL;
                 self::on_find_node($msg, $address);
                 break;
             case 'get_peers':
-                echo "c".PHP_EOL;
+//                echo "c".PHP_EOL;
 //                echo '朋友'.$address[0].'向你发出查找资源的请求'.PHP_EOL;
                 // 处理get_peers请求
                 self::on_get_peers($msg, $address);
