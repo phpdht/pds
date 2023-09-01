@@ -181,6 +181,9 @@ public static function send_handshake($client, $infohash)
     $ext_bytes = "\x00\x00\x00\x00\x00\x10\x00\x00";
     $peer_id = Base::get_node_id();
     $packet = $bt_header . $ext_bytes . $infohash . $peer_id;
+    /**
+     * @var \Swoole\Client $client
+     */
     $rs = $client->send($packet);
     if($rs === false){
         return false;
