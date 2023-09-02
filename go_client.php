@@ -20,7 +20,7 @@ define('BASEPATH', ROOT_PATH.'/dht_client_task/');
 require_once ROOT_PATH . '/Env.php';
 
 
-define('AUTO_FIND_TIME', Env::get('AUTO_FIND_TIME',30000));//定时寻找节点时间间隔 /毫秒
+define('AUTO_FIND_TIME', Env::get('AUTO_FIND_TIME',10000));//定时寻找节点时间间隔 /毫秒
 
 $config = require_once BASEPATH . '/config.php';
 define('NO_LOG', Env::get('NO_LOG',0));// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
@@ -76,7 +76,7 @@ $serv->on('WorkerStart', function( $serv, $worker_id){
             }
 
             if(count($table)){
-                DhtServer::auto_find_node($table);
+                DhtServer::auto_find_node(DhtClient::get_nodes(100));
             }
         });
     }

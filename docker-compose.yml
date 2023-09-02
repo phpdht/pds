@@ -5,7 +5,7 @@ networks:
 services:
   php74:
     build: .
-    image: phpdhtspider:p70
+    image: phpdhtspider:p71
     privileged: false
     restart: unless-stopped
     container_name: phpdhtspider
@@ -14,6 +14,7 @@ services:
     environment:
       - SERVER_IP=frpchk
       - SERVER_PORT=33509
+      - DAEMONIZE=1
     volumes:
       - .:/var/www/html
     tty: true
