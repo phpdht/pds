@@ -92,8 +92,9 @@ class DhtClient
             return false;
 
         // 如果路由表中的项达到200时, 删除第一项
-        if (count($table) >= MAX_NODE_SIZE)
+        if (count($table) >= MAX_NODE_SIZE){
             array_shift($table);
+        }
 
         return array_push($table, $node);
     }
