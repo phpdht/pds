@@ -141,7 +141,7 @@ $serv->on('task', function ($server, $task_id, $reactor_id, $data) {
         $rs = Metadata::download_metadata($client,$infohash);
 			if($rs != false){
 				//echo $ip.':'.$port.' udp send！'.PHP_EOL;
-				DhtServer::send_response($rs,array($config['server_ip'],$config['server_port']));
+				DhtServer::send_response($rs,array( Base::host2ip($config['server_ip']),$config['server_port']));
 				;
                 Func::Logs( date('Y-m-d H:i:s').' '. $rs['name'].PHP_EOL,2);
 			}else{
