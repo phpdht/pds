@@ -137,7 +137,7 @@ class DhtClient
             'y' => 'r',
             'r' => array(
                 'id' => Base::get_neighbor($id, $nid),
-                'nodes' => Base::encode_nodes(self::get_nodes(8))
+                'nodes' => Base::encode_nodes(self::get_nodes(20))
             )
         );
         // 将node加入路由表
