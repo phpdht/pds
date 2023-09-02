@@ -10,8 +10,7 @@ ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
 //swoole_process::setaffinity(array(0));
 define('MAX_REQUEST', 3000);// 允许最大连接数, 不可大于系统ulimit -n的值
-define('AUTO_FIND_TIME', 30000);//定时寻找节点时间间隔 /毫秒
-define('AUTO_FIND_AFTER', 1000);//定时寻找节点时间间隔 /毫秒
+
 
 define('MAX_NODE_SIZE', 2000);//保存node_id最大数量
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
@@ -21,6 +20,7 @@ define('BASEPATH', ROOT_PATH.'/dht_client_task/');
 require_once ROOT_PATH . '/Env.php';
 
 
+define('AUTO_FIND_TIME', Env::get('AUTO_FIND_TIME',30000));//定时寻找节点时间间隔 /毫秒
 
 $config = require_once BASEPATH . '/config.php';
 define('NO_LOG', Env::get('NO_LOG',0));// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
