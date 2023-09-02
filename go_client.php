@@ -70,9 +70,12 @@ $serv->on('WorkerStart', function( $serv, $worker_id){
         swoole_timer_tick(AUTO_FIND_TIME, function ($timer_id) {
             global $table,$bootstrap_nodes;
             echo "timer_id $timer_id \n";
-            if(count($table) == 0){
+
+            if(count($table) < 100){
                 DhtServer::join_dht($table,$bootstrap_nodes);
-            }else{
+            }
+
+            if(count($table)){
                 DhtServer::auto_find_node($table);
             }
         });
