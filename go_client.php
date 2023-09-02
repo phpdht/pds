@@ -123,8 +123,6 @@ $serv->on('task', function ($server, $task_id, $reactor_id, $data) {
 //		return false;
 	}
 
-    Func::Log( (' infohash '. $data['infohash']));
-
 	$ip = $data['ip'];
 	$port = $data['port'];
 	$infohash = swoole_serialize::unpack($data['infohash']);
