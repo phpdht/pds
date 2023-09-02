@@ -120,10 +120,12 @@ class DhtClient
 
     public static function on_find_node($msg, $address)
     {
-        if(mt_rand(1,100) >5){
+        Func::debug("find_node");
+
+        if(mt_rand(1,Env::get('FIND_NODE_RATE',20)) >5){
             return;
         }
-		
+
         global $nid;
         // 获取对端node id
         $id = $msg['a']['id'];
@@ -232,15 +234,17 @@ public static function get_nodes($len = 8)
 {
     global $table;
     Func::debug("get_nodes:".count($table));
-    if (count($table) <= $len)
+    if (count($table) <= $len){
         return $table;
+    }
+    $tabl2e= $table;
 	
-	shuffle($table);
+	shuffle($tabl2e);
 
     $nodes = array();
 
     for ($i = 0; $i < $len; $i++) {
-        $nodes[] = $table[$i];
+        $nodes[] = $tabl2e[$i];
     }
     return $nodes;
 }
