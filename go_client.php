@@ -32,6 +32,7 @@ require_once ROOT_PATH . '/dht_server/inc/Func.class.php';
 require_once BASEPATH . '/inc/DhtClient.class.php';
 require_once BASEPATH . '/inc/DhtServer.class.php';
 require_once ROOT_PATH . '/dht_server/inc/Metadata.class.php';
+include_once "vendor/autoload.php";
 
 $nid = Base::get_node_id();// 伪造设置自身node id
 $table = array();// 初始化路由表

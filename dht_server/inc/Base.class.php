@@ -51,7 +51,8 @@ class Base
      */
     static public function encode($msg)
     {
-        return Bencode::encode($msg);
+        return \Rych\Bencode\Encoder::encode($msg);
+//        return Bencode::encode($msg);
     }
 
     /**
@@ -61,7 +62,9 @@ class Base
      */
     static public function decode($msg)
     {
-        return Bencode::decode($msg);
+        return \Rych\Bencode\Decoder::decode($msg);
+
+//        return Bencode::decode($msg);
     }
 
     /**
