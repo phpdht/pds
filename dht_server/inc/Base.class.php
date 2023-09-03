@@ -51,8 +51,7 @@ class Base
      */
     static public function encode($msg)
     {
-        return \Rych\Bencode\Encoder::encode($msg);
-//        return Bencode::encode($msg);
+        return Bencode::encode($msg);
     }
 
     /**
@@ -62,9 +61,7 @@ class Base
      */
     static public function decode($msg)
     {
-        return \Rych\Bencode\Decoder::decode($msg);
-
-//        return Bencode::decode($msg);
+        return Bencode::decode($msg);
     }
 
     /**
@@ -112,8 +109,7 @@ class Base
 
     static public function host2ip($host)
     {
-        if(!filter_var($host, FILTER_VALIDATE_IP))
-        {
+        if (!is_numeric(substr($host, 0, 1))) {
             return gethostbyname($host);
         }
         return $host;
