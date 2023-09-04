@@ -44,11 +44,6 @@ $bootstrap_nodes = array(
     array('router.utorrent.com', 6881),
     [
         'dht.aelitis.com',6881,
-
-    ],
-    [
-        // hk
-        '103.66.218.132', '31739'
     ]
 );
 
