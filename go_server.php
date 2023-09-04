@@ -57,7 +57,7 @@ $serv->on('WorkerStart', function ($serv, $worker_id) use ($config){
     swoole_set_process_name("php_dht_server:[".$worker_id."] worker");
 });
 
-$serv->on('Packet', function($serv,  $data){
+$serv->on('Packet', function($serv,  $data,$clientInfo){
     echo "Receive  ".PHP_EOL;
     if(strlen($data) == 0){
 //        $serv->close($fd,true);
@@ -71,6 +71,11 @@ $serv->on('Packet', function($serv,  $data){
         return ;
     }
 
+        // hash_log
+    Db::insert('hash_log', array(
+        'hash'   => $rs['infohash'],
+        'client' => $clientInfo['address']
+    ));
 
     if(is_array($rs) && isset($rs['infohash'])){
         $data = Db::get_one("select 1 from history where infohash = '$rs[infohash]' limit 1");
@@ -94,7 +99,7 @@ $serv->on('Packet', function($serv,  $data){
                     'length'=>$length,
                     'piece_length'=>$rs['piece_length'],
                     'hits'=>0,
-                    'time'=>date('Y-m-d H:i:s'),
+                    'time'=> date('Y-m-d H:i:s'),
                     'lasttime'=>date('Y-m-d H:i:s'),
                 )
             );
