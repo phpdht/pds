@@ -9,7 +9,7 @@ error_reporting(E_ALL |E_NOTICE );
 ini_set('date.timezone','Asia/Shanghai');
 ini_set("memory_limit","-1");
 //swoole_process::setaffinity(array(0));
-define('MAX_REQUEST', 500);// 允许最大连接数, 不可大于系统ulimit -n的值
+define('MAX_REQUEST', 100000);// 允许最大连接数, 不可大于系统ulimit -n的值
 
 
 define('MAX_NODE_SIZE', 2000);//保存node_id最大数量
@@ -61,7 +61,7 @@ $serv = new swoole_server('0.0.0.0', 31739, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => $config['worker_num'],//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
-    'max_request' => 500, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
+    'max_request' => 100000, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
     'dispatch_mode' => 2,//保证同一个连接发来的数据只会被同一个worker处理
     'log_file' => BASEPATH . '/logs/error.log',
     'max_conn'=>65535,//最大连接数

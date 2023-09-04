@@ -18,7 +18,7 @@ require_once ROOT_PATH . '/Env.php';
 
 $config = require_once BASEPATH.'/config.php';
 define('WORKER_NUM', swoole_cpu_num()*2);// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
-define('MAX_REQUEST', 10000);// 允许最大连接数, 不可大于系统ulimit -n的值
+
 require_once BASEPATH .'/inc/Func.class.php';
 require_once BASEPATH . '/inc/Bencode.class.php';//bencode编码解码类
 require_once BASEPATH .'/inc/Base.class.php';//基础操作类
@@ -37,7 +37,7 @@ $serv = new swoole_server('0.0.0.0', 31738, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
     'worker_num' => WORKER_NUM,//设置启动的worker进程数
     'daemonize' => $config['daemonize'],//是否后台守护进程
-    'max_request' => MAX_REQUEST, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
+    'max_request' => 100000, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
     'dispatch_mode' => 2,//保证同一个连接发来的数据只会被同一个worker处理
     'log_file' => BASEPATH . '/logs/error.log',
     'max_conn'=>65535,//最大连接数
