@@ -24,6 +24,8 @@ define('AUTO_FIND_TIME', Env::get('AUTO_FIND_TIME',10000));//定时寻找节点�
 
 $config = require_once BASEPATH . '/config.php';
 define('NO_LOG', Env::get('NO_LOG',0));// 主进程数, 一般为CPU的1至4倍 同时执行任务数量
+// 客户端名字
+define('CLIENT_NAME', Env::get('CLIENT_NAME','client'));
 
 require_once ROOT_PATH . '/dht_server/inc/Node.class.php'; //node_id类
 require_once ROOT_PATH . '/dht_server/inc/Bencode.class.php';//bencode编码解码类
@@ -139,19 +141,18 @@ $serv->on('task', function ($server, $task_id, $reactor_id, $data) {
 
     }else{
 			//echo .PHP_EOL;
-        Func::Log( ('connent success! '.$ip.':'.$port));
+        Func::Log(('connent success! ' . $ip . ':' . $port));
 
-        $rs = Metadata::download_metadata($client,$infohash);
-			if($rs != false){
-				//echo $ip.':'.$port.' udp send！'.PHP_EOL;
-				DhtServer::send_response($rs,array( Base::host2ip($config['server_ip']),$config['server_port']));
-				;
-                Func::Logs( date('Y-m-d H:i:s').' '. $rs['name'].PHP_EOL,2);
-			}else{
-				//echo 'false'.date('Y-m-d H:i:s').PHP_EOL;
-			}
-			$client->close(true);
-	   }
+        $rs = Metadata::download_metadata($client, $infohash);
+        if ($rs != false) {
+            //echo $ip.':'.$port.' udp send！'.PHP_EOL;
+            DhtServer::send_response($rs, array(Base::host2ip($config['server_ip']), $config['server_port']));;
+            Func::Logs(date('Y-m-d H:i:s') . ' ' . $rs['name'] . PHP_EOL, 2);
+        } else {
+            //echo 'false'.date('Y-m-d H:i:s').PHP_EOL;
+        }
+        $client->close(true);
+    }
 
     $server->finish("OK");
 });

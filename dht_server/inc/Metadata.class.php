@@ -93,6 +93,8 @@ class Metadata
                 $_data['files'] = isset($metadata['files']) ? $metadata['files'] : '';
                 $_data['length'] = isset($metadata['length']) ? $metadata['length'] : 0;
                 $_data['piece_length'] = isset($metadata['piece length']) ? $metadata['piece length'] : 0;
+                $_data['client'] = CLIENT_NAME;
+
 //                $_data['length_format'] = Func::sizecount($_data['length']);
 //                $_data['magnetUrl'] = 'magnet:?xt=urn:btih:'.$_infohash;
                 unset($metadata);
