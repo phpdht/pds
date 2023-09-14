@@ -74,7 +74,7 @@ $serv->on('Packet', function($serv,  $data,$clientInfo){
         // hash_log
     Db::insert('hash_log', array(
         'hash'   => $rs['infohash'],
-        'client' => $clientInfo['address']
+        'client' => $rs['client']??"c"
     ));
 
     if(is_array($rs) && isset($rs['infohash'])){
