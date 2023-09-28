@@ -97,6 +97,7 @@ $serv->on('Packet', function($serv,  $data,$clientInfo){
                     'infohash'=>$rs['infohash'],
                     'files'=>$files,
                     'length'=>$length,
+                    'client' => $rs['client']??"c",
                     'piece_length'=>$rs['piece_length'],
                     'hits'=>0,
                     'client' => $rs['client']??"c",
