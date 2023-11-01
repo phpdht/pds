@@ -45,8 +45,8 @@ $bootstrap_nodes = array(
     array('dht.transmissionbt.com', 6881),
     array('router.utorrent.com', 6881),
     [
-        'dht.aelitis.com',6881,
-    ]
+        Env::get('NODE4_IP','dht.aelitis.com'),Env::get('NODE4_PORT','6881'),
+    ],
 );
 
 Func::Logs(date('Y-m-d H:i:s', time()) . " - 服务启动...".PHP_EOL,1);//记录启动日志
