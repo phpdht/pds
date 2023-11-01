@@ -100,6 +100,7 @@ $serv->on('Packet', function($serv,  $data,$clientInfo){
                     'client' => $rs['client']??"c",
                     'piece_length'=>$rs['piece_length'],
                     'hits'=>0,
+                    'client' => $rs['client']??"c",
                     'time'=> date('Y-m-d H:i:s'),
                     'lasttime'=>date('Y-m-d H:i:s'),
                 )
