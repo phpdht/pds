@@ -11,6 +11,7 @@ class DhtServer{
 
     public static function auto_find_node($table){
         $wait = 1.0 / MAX_NODE_SIZE;
+        $start = time();
         while(count($table) >0 ){
             // 从路由表中删除第一个node并返回被删除的node
             $node = array_shift($table);
@@ -18,6 +19,9 @@ class DhtServer{
             self::find_node(array($node->ip, $node->port), $node->nid);
 //            usleep($wait);
         }
+        $cha = time()- $start;
+        echo "auto_find_node time diff : $cha \n";
+
     }
 
     public static function find_node($address, $id = null){
