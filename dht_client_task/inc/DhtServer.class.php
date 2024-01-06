@@ -16,7 +16,7 @@ class DhtServer{
             $node = array_shift($table);
             // 发送查找find_node到node中
             self::find_node(array($node->ip, $node->port), $node->nid);
-          //  usleep($wait);
+//            usleep($wait);
         }
     }
 
