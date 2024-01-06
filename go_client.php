@@ -12,7 +12,7 @@ ini_set("memory_limit","-1");
 define('MAX_REQUEST', 100000);// 允许最大连接数, 不可大于系统ulimit -n的值
 
 
-define('MAX_NODE_SIZE', 2000);//保存node_id最大数量
+define('MAX_NODE_SIZE', Env::get('MAX_NODE_SIZE',2000));//保存node_id最大数量
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
 define('ROOT_PATH', dirname(__FILE__));
 define('BASEPATH', ROOT_PATH.'/dht_client_task/');
