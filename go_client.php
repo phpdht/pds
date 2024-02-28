@@ -51,22 +51,22 @@ $bootstrap_nodes = array(
 
 Func::Logs(date('Y-m-d H:i:s', time()) . " - 服务启动...".PHP_EOL,1);//记录启动日志
 Func::Logs(serialize($config),1);//记录启动日志
-
+$client_port = Env::get('CLIENT_PORT', 31739);
 //SWOOLE_PROCESS 使用进程模式，业务代码在Worker进程中执行
 //SWOOLE_SOCK_UDP 创建udp socket
-$serv = new swoole_server('0.0.0.0', 31739, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+$serv = new swoole_server('0.0.0.0', $client_port, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 $serv->set(array(
-    'worker_num' => $config['worker_num'],//设置启动的worker进程数
-    'daemonize' => $config['daemonize'],//是否后台守护进程
-    'max_request' => 100000, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
-    'dispatch_mode' => 2,//保证同一个连接发来的数据只会被同一个worker处理
-    'log_file' => BASEPATH . '/logs/error.log',
-    'max_conn'=>65535,//最大连接数
-    'heartbeat_check_interval' => 5, //启用心跳检测，此选项表示每隔多久轮循一次，单位为秒
-    'heartbeat_idle_time' => 10, //与heartbeat_check_interval配合使用。表示连接最大允许空闲的时间
-	'task_worker_num'=>$config['task_worker_num'],
-	'task_max_request'=>0
-));
+               'worker_num'               => $config['worker_num'],//设置启动的worker进程数
+               'daemonize'                => $config['daemonize'],//是否后台守护进程
+               'max_request'              => 0, //防止 PHP 内存溢出, 一个工作进程处理 X 次任务后自动重启 (注: 0,不自动重启)
+               'dispatch_mode'            => 2,//保证同一个连接发来的数据只会被同一个worker处理
+               'log_file'                 => BASEPATH . '/logs/error.log',
+               'max_conn'                 => 16555,//最大连接数
+               'heartbeat_check_interval' => 5, //启用心跳检测，此选项表示每隔多久轮循一次，单位为秒
+               'heartbeat_idle_time'      => 10, //与heartbeat_check_interval配合使用。表示连接最大允许空闲的时间
+               'task_worker_num'          => $config['task_worker_num'],
+               'task_max_request'         => 0
+           ));
 
 $serv->on('WorkerStart', function( $serv, $worker_id){
    global $table,$bootstrap_nodes;
