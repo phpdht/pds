@@ -57,6 +57,6 @@ class DhtServer{
 
         $re =  $serv->sendto($ip, $address[1], $data);
 
-//        Func::Log('send_response hash'.serialize($re));
+        Func::Log('send_response hash'.serialize($re));
     }
 }

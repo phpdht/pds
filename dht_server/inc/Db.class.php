@@ -13,7 +13,7 @@
 			if (!self::$conn){
 				self::$conn = mysqli_connect(self::$config['host'], self::$config['user'], self::$config['pass'], self::$config['name'], 3306);
 				if (empty(self::$conn))
-					echo "Connect MySql Error!".PHP_EOL;
+					echo "Connect MySql Error".mysqli_connect_error()."!".PHP_EOL;
 				else{
 					mysqli_query(self::$conn, " SET character_set_connection=utf8, character_set_results=utf8, character_set_client=binary, sql_mode='' ");
 				}
